@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
       y = e.pageY;
     $i.css({
       "z-index": 5,
-      "top": y - 20,
+      "top": y - 30,
       "left": x,
       "position": "absolute",
       "font-weight": "bold",
