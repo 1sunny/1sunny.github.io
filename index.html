@@ -211,20 +211,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-test2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-背包问题总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/22/test2/">test2</a>
+      <a class="article-title" href="/2020/06/24/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">背包问题总结</a>
     </h1>
   
 
         
-        <a href="/2020/06/22/test2/" class="archive-article-date">
-  	<time datetime="2020-06-22T08:45:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-22</time>
+        <a href="/2020/06/24/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="archive-article-date">
+  	<time datetime="2020-06-24T15:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-24</time>
 </a>
         
         
@@ -234,7 +234,7 @@
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text" style="font-size: 16px;color: grey">  字数统计: </span>
         <!--这里样式可以自己定制-->
-        <span class="post-count" style="font-size: 16px;color: grey">1字</span>
+        <span class="post-count" style="font-size: 16px;color: grey">200字</span>
       </span>
     </span>
 
@@ -253,7 +253,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>stange!</p>
+        <p>(1)01背包  :   未优化版本 j 不能从 v [ i ] 开始    从1 开始</p>
+<p>(2)完全背包(物品无限使用) : 多循环一层k  通过正序体积 j 达到去掉 k 循环</p>
+<p>(3)多重背包 Ⅰ :  不能去掉 k 层循环 所以逆序 j</p>
+<p>(4)多重背包 Ⅱ : 二进制优化(乘法原理: 3个数可以表示8个不同的数(二进制))</p>
+<p>(5)多重背包 Ⅲ : 待学习</p>
+<p>多重背包实际上是分组背包的一种特殊情况</p>
+<p>(6)分组背包 : 第三层循环 循环某一组的每个物品</p>
+<p>(7)背包问题求方案数 : 待学习</p>
+<p>(8)求背包问题的方案 : 维护新的记录解决方案数的数组和 F[ i ] 同时更新</p>
+<p>(9)有依赖的背包问题 : 待学习</p>
 
       
 
@@ -266,91 +275,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/22/test2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/10/test/">test</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/10/test/" class="archive-article-date">
-  	<time datetime="2020-04-09T16:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-10</time>
-</a>
-        
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="font-size: 16px;color: grey">  字数统计: </span>
-        <!--这里样式可以自己定制-->
-        <span class="post-count" style="font-size: 16px;color: grey">0字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="font-size: 16px;color: grey">  阅读时长: </span>
-        <span class="post-count" style="font-size: 16px;color: grey">1分</span>
-      </span>
-    </span>
-</div>
-
-          
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/10/test/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/24/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">展开全文 >></a>
         </p>
       
 
