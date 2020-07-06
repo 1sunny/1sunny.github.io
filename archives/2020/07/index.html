@@ -6,17 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://onesunny.cn">
-  <title>背包问题总结 | One Sunny</title>
+  <title>Archives: 2020/7 | One Sunny</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="(1)01背包  :   未优化版本 j 不能从 v [ i ] 开始    从1 开始 (2)完全背包(物品无限使用) : 多循环一层k  通过正序体积 j 达到去掉 k 循环 (3)多重背包 Ⅰ :  不能去掉 k 层循环 所以逆序 j (4)多重背包 Ⅱ : 二进制优化(乘法原理: 3个数可以表示8个不同的数(二进制)) (5)多重背包 Ⅲ : 待学习 多重背包实际上是分组背包的一种特殊情况">
-<meta property="og:type" content="article">
-<meta property="og:title" content="背包问题总结">
-<meta property="og:url" content="http://onesunny.cn/2020/06/24/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/index.html">
+  <meta name="description" content="onesunny的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="One Sunny">
+<meta property="og:url" content="http://onesunny.cn/archives/2020/07/index.html">
 <meta property="og:site_name" content="One Sunny">
-<meta property="og:description" content="(1)01背包  :   未优化版本 j 不能从 v [ i ] 开始    从1 开始 (2)完全背包(物品无限使用) : 多循环一层k  通过正序体积 j 达到去掉 k 循环 (3)多重背包 Ⅰ :  不能去掉 k 层循环 所以逆序 j (4)多重背包 Ⅱ : 二进制优化(乘法原理: 3个数可以表示8个不同的数(二进制)) (5)多重背包 Ⅲ : 待学习 多重背包实际上是分组背包的一种特殊情况">
+<meta property="og:description" content="onesunny的博客">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-06-24T15:37:46.000Z">
-<meta property="article:modified_time" content="2020-06-24T15:37:53.997Z">
 <meta property="article:author" content="One Sunny">
 <meta property="article:tag" content="onesunny">
 <meta name="twitter:card" content="summary">
@@ -211,156 +209,49 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-背包问题总结" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      背包问题总结
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-test">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/07/06/deploy/" class="archive-article-date">
+  	<time datetime="2020-07-06T09:36:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-06</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/07/06/deploy/">deploy</a>
     </h1>
   
 
-        
-        <a href="/2020/06/24/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-06-24T15:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-24</time>
-</a>
-        
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text" style="font-size: 16px;color: grey">  字数统计: </span>
-        <!--这里样式可以自己定制-->
-        <span class="post-count" style="font-size: 16px;color: grey">200字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text" style="font-size: 16px;color: grey">  阅读时长: </span>
-        <span class="post-count" style="font-size: 16px;color: grey">1分</span>
-      </span>
-    </span>
-</div>
-
+        <div class="article-info info-on-right">
           
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>(1)01背包  :   未优化版本 j 不能从 v [ i ] 开始    从1 开始</p>
-<p>(2)完全背包(物品无限使用) : 多循环一层k  通过正序体积 j 达到去掉 k 循环</p>
-<p>(3)多重背包 Ⅰ :  不能去掉 k 层循环 所以逆序 j</p>
-<p>(4)多重背包 Ⅱ : 二进制优化(乘法原理: 3个数可以表示8个不同的数(二进制))</p>
-<p>(5)多重背包 Ⅲ : 待学习</p>
-<p>多重背包实际上是分组背包的一种特殊情况</p>
-<p>(6)分组背包 : 第三层循环 循环某一组的每个物品</p>
-<p>(7)背包问题求方案数 : 待学习</p>
-<p>(8)求背包问题的方案 : 维护新的记录解决方案数的数组和 F[ i ] 同时更新</p>
-<p>(9)有依赖的背包问题 : 待学习</p>
+          
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://onesunny.cn/2020/06/24/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
   
   
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -384,8 +275,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
