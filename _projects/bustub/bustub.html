@@ -1,0 +1,103 @@
+---
+layout: default
+permalink: /projects/bustub/index.html
+description: Bustub 数据库
+---
+<!-- jQuery -->
+<script src="https://unpkg.com/jquery@3.x.x/dist/jquery.min.js"></script>
+<!-- jQuery Terminal -->
+<script src="https://unpkg.com/jquery.terminal@2.x.x/js/jquery.terminal.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/jquery.terminal@2.x.x/css/jquery.terminal.min.css" />
+<!-- prismjs  -->
+<link rel="stylesheet" href="https://unpkg.com/prismjs@1.x.x/themes/prism.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/terminal-prism@0.3.x/css/prism.css" />
+<script src="https://unpkg.com/prismjs@1.x.x/prism.js"></script>
+<script src="https://unpkg.com/prismjs@1.x.x/components/prism-sql.min.js"></script>
+<script src="https://unpkg.com/jquery.terminal@2.x.x/js/prism.js"></script>
+<!-- CJK characters -->
+<script src="https://cdn.jsdelivr.net/gh/jcubic/static/js/wcwidth.js"></script>
+
+<style>
+    .terminal {
+        --color: black;
+        --background: white;
+        --link-color: darkblue;
+        --size: 1.2;
+        --font: "Source Code Pro", monospace;
+        height: calc(100% - 3.5rem - 6px) !important;
+        margin-top: -1.5rem;
+    }
+
+    table,
+    tr,
+    td,
+    tbody,
+    thead,
+    div {
+        white-space: pre;
+    }
+</style>
+
+<script src="bustub-wasm-shell.js"></script>
+
+<script type="text/javascript">
+    let is_ready = false;
+
+    Module['onRuntimeInitialized'] = function () {
+        const executeQuery = Module.cwrap('BustubExecuteQuery', 'number', ['string', 'number', 'number']);
+        const initialize = Module.cwrap('BustubInit', 'number', []);
+        window.executeQuery = (x) => {
+            const bufferSize = 64 * 1024;
+            let output = "\0".repeat(bufferSize);
+            let ptrOutput = Module.allocateUTF8(output);
+            const retCode = executeQuery(x, ptrOutput, bufferSize);
+            output = Module.UTF8ToString(ptrOutput);
+            Module._free(ptrOutput);
+            return [retCode, output];
+        };
+        initialize();
+        is_ready = true;
+    };
+
+    $(document).ready(() => {
+        $.terminal.syntax('sql');
+        $.terminal.prism_formatters = {
+            prompt: false,
+            echo: false,
+            animation: false,
+            command: true
+        };
+        let line = "";
+        var term = $('body').terminal(function (command) {
+            if (!is_ready) {
+                this.echo("BusTub shell is still initializing, please wait.");
+                return;
+            };
+            line += command;
+            if (line.endsWith(';') || line.startsWith("\\")) {
+                if (line == "\\clear") {
+                    this.clear();
+                } else {
+                    const [retCode, result] = executeQuery(line);
+                    this.echo(result, { raw: true });
+                    if (retCode == 1) {
+                        this.echo("Table truncated due to output limit.");
+                    }
+                    this.echo();
+                }
+                line = "";
+            }
+        }, {
+            greetings:
+                ` 欢迎使用 BusTub shell！ \u{1F68C}\u{1F6C1} \n
+BusTub 是卡内基梅隆大学为数据库系统导论 (15-445/645) 课程构建的关系数据库管理系统 \n
+该 Web Shell基于 WebAssembly 构建，标准解答对应的 Web Shell 在 https://15445.courses.cs.cmu.edu/fall2022/bustub \n
+使用 \\help 了解用法，使用 \\clear 清除页面，\\dt 查看所有表 \n
+例如: \n select * from __mock_table_tas_2022; \n
+create table my_table(c1 INT, c2 VARCHAR(5)); \n
+explain insert into my_table values (1, 'a'), (2,'b');
+`,
+            prompt: () => line.length == 0 ? "[[b;;]bustub> ]" : "[[b;;]... ]"
+        })
+    })
+</script>

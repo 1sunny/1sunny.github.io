@@ -1,0 +1,34 @@
+title: Home
+author: JSL
+email: 2944733883@qq.com
+url: https://1sunny.github.io
+
+plugins:
+  - jekyll-paginate
+  - jekyll-redirect-from
+
+minima_reboot:
+  date_format: "%Y-%m-%d"
+  date_format_short: "%m-%d"
+
+header_pages:
+- posts.md
+- projects.md
+- about.md
+
+footer_icons:
+
+paginate: 10
+
+markdown: kramdown
+
+collections:
+  projects:
+    output: true # 如果你希望 Jekyll 对每一个你集合中的文件，都创建一个公开的，渲染后的版本，请在_config.yml中，将你集合的元数据中将output键设置为true
+    permalink: /projects/:path/
+
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - minima-reboot.gemspec

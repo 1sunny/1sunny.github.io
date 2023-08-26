@@ -1,0 +1,26 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {% include head.html %}
+
+  <body style="display: flex; flex-direction: column;">
+
+    {% include header.html %}
+      <div id="content-container" class="container" style="flex: auto; overflow: auto;">
+        {{ content }}
+      </div>
+
+
+
+  </body>
+
+</html>
+
+<style>
+  html, body {
+    height: 100%;
+  }
+</style>
