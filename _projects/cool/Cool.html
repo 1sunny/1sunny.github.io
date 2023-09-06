@@ -1,0 +1,268 @@
+---
+layout: default
+permalink: /projects/cool/index.html
+description: Cool 编译器
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cool Compiler</title>
+</head>
+<body>
+
+<script type="module">
+  import CModule from './mycoolc_wasm.js';
+  import SModule from './spim_wasm.js';
+
+  CModule['onRuntimeInitialized'] = function() {
+    document.getElementById("asm").innerText = "";
+    document.getElementById('compile-btn').addEventListener('click', compile);
+  };
+
+  SModule['onRuntimeInitialized'] = function() {
+    document.getElementById('execute-btn').addEventListener('click', execute);
+  };
+
+
+  function compile() {
+    console.log("CModule: ", CModule);
+    const code = document.getElementById("code").innerText;
+
+    const compileResultPtr = CModule._malloc(102400);
+    let compileResult;
+    cool_compile(code, compileResultPtr);
+    compileResult = CModule.UTF8ToString(compileResultPtr);
+    CModule._free(compileResultPtr);
+
+    document.getElementById("asm").innerText = compileResult;
+    console.log("compileResult: ", compileResult);
+  }
+
+  function cool_compile(code, compileResultPtr) {
+    console.log(code, compileResultPtr);
+    return CModule.ccall(
+        'cool_compile',
+        'number',
+        ['string', 'number'],
+        [code, compileResultPtr]
+    );
+  }
+
+  function execute() {
+    document.getElementById("output").innerText = "running ...";
+    let asm = document.getElementById("asm").innerText;
+    const executeResultPtr = SModule._malloc(102400);
+    let executeResult;
+    cool_execute(asm, executeResultPtr);
+    executeResult = SModule.UTF8ToString(executeResultPtr);
+    SModule._free(executeResultPtr);
+
+    document.getElementById("output").innerText = executeResult;
+  }
+
+  function cool_execute(asm, executeResultPtr) {
+    return SModule.ccall(
+        'cool_execute',
+        'number',
+        ['string', 'number'],
+        [asm, executeResultPtr]
+    );
+  }
+
+</script>
+<div class="container-lg">
+  <details>
+    <summary>Cool 语言介绍</summary>
+    <div class="bd-callout bd-callout-info">
+      <pre>
+Cool (Classroom Object-Oriented Language) Cool 保留了现代编程语言的许多功能，包括对象、静态类型和自动内存管理。
+Cool 程序由多个类构成，单继承机制，其中 Main 类的 main 方法是程序的入口函数。
+Cool 是一种表达式语言，每个表达式都有一个值和类型。
+Cool 是类型安全的，类型检查保证在 Cool 程序的执行中不会出现运行时类型错误。</pre>
+    </div>
+  </details>
+  <details>
+    <summary>Cool 中的基础类</summary>
+    <div class="bd-callout bd-callout-info">
+      <pre>
+Object（Object 是每个类的直接父类或者间接父类）:
+abort() : Object
+type_name() : String
+copy() : SELF_TYPE
+
+IO:
+out_string(x : String) : SELF_TYPE
+out_int(x : Int) : SELF_TYPE
+in_string() : String
+in_int() : Int
+
+Int:
+Int 类型变量默认初始化为 0（不是 void）
+
+String:
+length() : Int
+concat(s : String) : String
+substr(i : Int, l : Int) : String
+
+Bool:
+Bool 类提供 true 和 false。 Bool 类型变量的默认初始化为 false（不是 void）</pre>
+    </div>
+  </details>
+  <details>
+    <summary>Cool 代码示例</summary>
+    <div class="bd-callout bd-callout-info">
+      <pre>
+-- single line comment
+class Father inherits IO {
+    i: Int <- 0;
+
+    inc(): SELF_TYPE {
+        {
+            i <- i+1;
+            self;
+        }
+    };
+};
+class Child inherits Father {
+    name: String;
+
+    init(name_: String): SELF_TYPE {
+        {
+            name <- name_;
+            self;
+        }
+    };
+
+    inc(): SELF_TYPE {
+        {
+            i <- i+2;
+            self;
+        }
+    };
+
+    hello(): Object {
+        {
+            out_string("My name is ".concat(name).concat(", My number is "));
+            out_int(i);
+            out_string("\n");
+        }
+    };
+};
+Class Main inherits IO {
+    main(): Object {
+        let s: Child <- (new Child).init("Child") in {
+            out_string("Before child increment\n");
+            s.hello();
+            s.inc();
+            out_string("After child increment\n");
+            s.hello();
+        }
+    };
+};</pre>
+    </div>
+  </details>
+  <div class="row mt-3">
+    <div class="col-sm-6">
+      <div class="bd-highlight font-weight-bold">cool.cl (cool source file)</div>
+      <pre contenteditable="true"
+           class="form-control"
+           id="code"
+           style="height: 400px;overflow: auto;"
+      >
+Class Main inherits IO {
+    main(): Object {
+        out_string("Hello World !\n")
+    };
+};</pre>
+      <button id="compile-btn" type="button" class="mt-3 btn btn-outline-secondary btn-sm">编译</button>
+    </div>
+    <div class="col-sm-6"
+    >
+      <div class="bd-highlight font-weight-bold">a.s (mips assembly code)</div>
+      <div class="card"
+           style="height: 400px;overflow-y: auto;"
+      >
+        <div class="card-body">
+          <pre id="asm">initializing ...</pre>
+        </div>
+      </div>
+      <button id="execute-btn" type="button" class="mt-3 btn btn-outline-secondary btn-sm">运行</button>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-sm">
+      <div class="bd-highlight font-weight-bold">Output</div>
+      <div class="card">
+        <div class="card-body">
+          <pre id="output"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<style>
+  pre {
+    margin-bottom: 0 !important;
+  }
+  .card-body {
+    padding: 0.375rem 0.75rem !important;
+  }
+  .bd-highlight {
+    background-color: rgba(86,61,124,0.15);
+    border: 1px solid rgba(86,61,124,0.15)
+  }
+  .bd-callout {
+    padding: 0.5rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem
+  }
+
+  .bd-callout h4 {
+    margin-top: 0;
+    margin-bottom: .25rem
+  }
+
+  .bd-callout p:last-child {
+    margin-bottom: 0
+  }
+
+  .bd-callout code {
+    border-radius: .25rem
+  }
+
+  .bd-callout + .bd-callout {
+    margin-top: -.25rem
+  }
+
+  .bd-callout-info {
+    border-left-color: #5bc0de
+  }
+
+  .bd-callout-info h4 {
+    color: #5bc0de
+  }
+
+  .bd-callout-warning {
+    border-left-color: #f0ad4e
+  }
+
+  .bd-callout-warning h4 {
+    color: #f0ad4e
+  }
+
+  .bd-callout-danger {
+    border-left-color: #d9534f
+  }
+
+  .bd-callout-danger h4 {
+    color: #d9534f
+  }
+</style>
+</html>
