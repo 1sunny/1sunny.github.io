@@ -1,0 +1,239 @@
+---
+layout: default
+permalink: /projects/cminus/index.html
+description: C-minus 编译器
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>C-minus Compiler</title>
+</head>
+<body>
+
+<script type="module">
+  document.addEventListener('DOMContentLoaded', function() {
+      var button = document.getElementById('compile-btn');
+      button.addEventListener('click', compile);
+  });
+  function addButton(title, content) {
+    const colDiv = document.getElementById('to-add-button');
+    const button = document.createElement('button');
+    button.id = title;
+    button.type = 'button';
+    button.className = 'mt-3 ml-3 btn btn-outline-secondary btn-sm';
+    button.textContent = title;
+    button.addEventListener('click', function() {
+      document.getElementById('output-pre').innerText = content;
+      document.getElementById('current-title').innerText = title;
+    });
+    colDiv.appendChild(button);
+  }
+  function addDetail(title, content) {
+    const details = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = title;
+
+    const div = document.createElement('div');
+    div.className = 'bd-callout bd-callout-info';
+
+    const pre = document.createElement('pre');
+    pre.textContent = content;
+
+    div.appendChild(pre);
+    details.appendChild(summary);
+    details.appendChild(div);
+
+    document.querySelector('.container-lg').appendChild(details);
+  };
+  function compile() {
+    const code = document.getElementById("code").innerText;
+    fetch('http://127.0.0.1:5000/compile_and_run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code: code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let allBtn = ['error', 'output', 'code.ll', 'after_Mem2Reg.ll', 'after_LIR.ll', 'code.s'];
+                const colDiv = document.getElementById('to-add-button');
+                for (let index in allBtn) {
+                  let name = allBtn[index];
+                  let originBtn = document.getElementById(name);
+                  if (originBtn) {
+                    colDiv.removeChild(originBtn);
+                  }
+                  if (data[name]) {
+                    addButton(name, data[name]);
+                    if (name === 'error' || name === 'output') {
+                      document.getElementById(name).click();
+                    }
+                  }
+                }
+            })
+            .catch((error) => {
+                const outputElement = document.getElementById('output-pre');
+                outputElement.textContent = 'Request failed: ' + error;
+            });
+  };
+
+</script>
+<div class="container-lg mb-5">
+  <details>
+    <summary>C-minus 语言介绍</summary>
+    <div class="bd-callout bd-callout-info">
+      <pre>C-minus 支持 int/float 类型和元素为 int/float 类型且按行优先存储的多维数组类型，const 修饰符可用于声明常量。
+C-minus 支持 int 和 和 float 之间的隐式类型转换
+C-minus 支持逻辑运算的“短路计算”</pre>
+    </div>
+  </details>
+  <details>
+    <summary>C-minus 关键字</summary>
+    <div class="bd-callout bd-callout-info">
+      <pre>int, float, if, else, while, break, continue, return, void, const</pre>
+    </div>
+  </details>
+ 
+  <details>
+    <summary>C-minus 代码示例</summary>
+    <div class="bd-callout bd-callout-info">
+      <pre>
+int n;
+
+int bubblesort(int arr[]) {
+  int i;
+  int j;
+  i = 0;
+  while (i < n - 1) {
+    // Last i elements are already in place
+    j = 0;
+    while (j < n - i - 1) {
+      if (arr[j] > arr[j + 1]) {
+        int tmp;
+        tmp = arr[j + 1];
+        arr[j + 1] = arr[j];
+        arr[j] = tmp;
+      }
+      j = j + 1;
+    }
+    i = i + 1;
+  }
+  return 0;
+}
+
+int main() {
+  n = 10;
+  int a[10] = {4, 3, 9, 2, 0, 1, 6, 5, 7, 8};
+  int i;
+  i = bubblesort(a);
+  while (i < n) {
+    int tmp;
+    tmp = a[i];
+    putint(tmp);
+    tmp = 10;
+    putch(tmp);
+    i = i + 1;
+  }
+  return 0;
+}</pre>
+    </div>
+  </details>
+  <div class="row mt-3">
+    <div class="col-sm-6">
+      <div class="bd-highlight font-weight-bold">code.cminus (c-minus source file)</div>
+      <pre contenteditable="true"
+           class="form-control"
+           id="code"
+           style="height: 400px;overflow: auto;"
+      >
+int main() {
+  int str[15] = {72, 101, 108, 108, 111, 32, 67, 45, 109, 105, 110, 117, 115, 32, 33};
+  int i = 0;
+  while(i < 15) {
+    putch(str[i]);
+    i = i + 1;
+  }
+}</pre>
+    </div>
+    <div class="col-sm-6"
+    >
+      <div id="current-title" class="bd-highlight font-weight-bold">output</div>
+      <div class="card"
+           style="height: 400px;overflow-y: auto;"
+      >
+        <div class="card-body">
+          <pre id="output-pre"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="to-add-button">
+    <button id="compile-btn" type="button" class="mt-3 btn btn-outline-secondary btn-sm">编译 & 运行</button>
+  </div>
+</div>
+</body>
+<style>
+  pre {
+    margin-bottom: 0 !important;
+  }
+  .card-body {
+    padding: 0.375rem 0.75rem !important;
+  }
+  .bd-highlight {
+    background-color: rgba(86,61,124,0.15);
+    border: 1px solid rgba(86,61,124,0.15)
+  }
+  .bd-callout {
+    padding: 0.5rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem
+  }
+
+  .bd-callout h4 {
+    margin-top: 0;
+    margin-bottom: .25rem
+  }
+
+  .bd-callout p:last-child {
+    margin-bottom: 0
+  }
+
+  .bd-callout code {
+    border-radius: .25rem
+  }
+
+  .bd-callout + .bd-callout {
+    margin-top: -.25rem
+  }
+
+  .bd-callout-info {
+    border-left-color: #5bc0de
+  }
+
+  .bd-callout-info h4 {
+    color: #5bc0de
+  }
+
+  .bd-callout-warning {
+    border-left-color: #f0ad4e
+  }
+
+  .bd-callout-warning h4 {
+    color: #f0ad4e
+  }
+
+  .bd-callout-danger {
+    border-left-color: #d9534f
+  }
+
+  .bd-callout-danger h4 {
+    color: #d9534f
+  }
+</style>
+</html>
