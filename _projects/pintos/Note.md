@@ -13,3 +13,5 @@ export gdbm="./src/misc/gdb-macros"
 需要修改pintos.html中的服务器地址
 
 要把zsh配置文件弄到服务器去
+
+test
