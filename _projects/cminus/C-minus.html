@@ -49,7 +49,7 @@ description: C-minus 编译器
   };
   function compile() {
     const code = document.getElementById("code").innerText;
-    fetch('http://127.0.0.1:5000/compile_and_run', {
+    fetch('http://47.122.117.187:5000/compile_and_run', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,7 +58,15 @@ description: C-minus 编译器
             })
             .then(response => response.json())
             .then(data => {
-                let allBtn = ['error', 'output', 'code.ll', 'after_Mem2Reg.ll', 'after_LIR.ll', 'code.s'];
+                let allBtn = ['error', 'output', 'code.ll', 
+                'after_Mem2Reg.ll',
+                'after_ConstantPropagation.ll', 
+                'after_StrengthReduction.ll', 
+                'after_TailRecursion.ll', 
+                'after_LocalCommonSubExpression.ll', 
+                'after_LoopInvariant.ll', 
+                'after_FunctionInline.ll', 
+                'code.s'];
                 const colDiv = document.getElementById('to-add-button');
                 for (let index in allBtn) {
                   let name = allBtn[index];
